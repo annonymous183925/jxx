@@ -59,7 +59,7 @@ def call(callable) {
 }
 ```
 can get turned into something like
-```
+``` assembly
 call:                                                       ; assume callable is rdi
   mov rax, qword ptr [rdi]                                  ; put class object on 'rax'
   xor edi, edi                                              ; put first argument to nullptr
