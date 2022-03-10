@@ -51,3 +51,19 @@ fib:                  ; assume rdi is 'n'
 .overflow:
   ret
 ```
+
+Calling functions (like the following)
+```
+def call(callable) {
+  return callable();  
+}
+```
+can get turned into something like
+```
+call:                                                       ; assume callable is rdi
+  mov rax, qword ptr [rdi]                                  ; put class object on 'rax'
+  xor edi, edi                                              ; put first argument to nullptr
+  xor esi, esi                                              ; put last argument to nullptr
+  jmp qword ptr [rax + class_function_pointer_offset]       ; tail call to the class function pointer
+```
+However this is not simple because of exception handling. In this case, the exception handling job would be moved into the caller.
